@@ -3,7 +3,7 @@
 //
 // Sudoku
 
-// Student Name
+// Student Juan Francisco
 // Student Number
 // and
 // Student Name
