@@ -10,130 +10,151 @@
 // Student Number
 
 // Standard libraries
-#include <string>
 #include <iostream>
+#include <cmath>
 #include <fstream>
-#include <vector>
-#include <algorithm>
-
+#include <Windows.h>
 using namespace std;
 
-const int BOARDSIZE = 9;
-const int EMPTY = 0;
+void display(int sudoku[][9]){
 
-/*
- * creates a board filed with zeroes (empty spaces)
- * we will do this, then populate it from a file with
- * another function below
- */
-void createZeroBoard(vector< vector<int> >& board){
-  for(int r = 0; r < BOARDSIZE ; r++){
-    // grab a full line from the file
-    for(int c = 0; c < BOARDSIZE ; c++){
-      board[r][c] = EMPTY;
+  cout<<"  0 1 2  3 4 5  6 7 8  "<<endl;
+  for(int row = 0 ; row<9 ; row++){
+    if((row==3)||(row==6)){
+      cout<<"-------+------+------"<<endl;
     }
+    cout<<row;
+    for(int column= 0 ; column < 9 ; column++){
+      if((column==3)||(column==6)){
+      cout<<"|";
+    }
+    cout<<" "<<sudoku[row][column];
+  }
+    cout<<endl;
   }
 }
-
-/*
- * Populates the board from the contents of the file
- * The file must contain 9 lines with 9 values each line
- * The values must be either zero (0) for empty or values between 1 and 9
- */
-void populateBoardFromFile(vector< vector<int> >& board, string filename){
-  ifstream infile(filename.c_str()); // the c_str() is to convert from string to char*
-  int cell;
-  string line;
-  if(infile.good()){
-    for(int r = 0; r < BOARDSIZE ; r++){
-      // grab a full line from the file
-      for(int c = 0; c < BOARDSIZE ; c++){
-	infile >> cell;
-	board[r][c] = cell;
+void erase(int sudoku[][9], int sudoku2[][9]){
+  int ans;
+  while(ans==0){
+  cout<<endl;
+  cout<<"Please choose the row of the desired number to erase: ";
+  int row;
+  cin>>row;
+  cout<<"Please choose the column of the desired number to erase: ";
+  int col;
+  cin>>col;
+  if(sudoku2[row][col]!=0){
+    cout<<"YOU CAN'T ERASE THAT NUMBER"<<endl;
+    cout<<endl;
+  }
+  else{
+  sudoku[row][col]=0;
+  }
+  display(sudoku);
+  cout<<"Do you wish to erase another number? (0-yes/1-no):";
+  cin>>ans;
+}
+}
+void edit(int sudoku[][9], int sudoku2[][9]){
+  int ans;
+  while(ans==0){
+  cout<<endl;
+  cout<<"Please choose the ROW of the desired number to edit: ";
+  int row;
+  cin>>row;
+  cout<<"Please choose the COLUMN of the desired number to edit: ";
+  int col;
+  cin>>col;
+  if(sudoku2[row][col]!=0){
+    cout<<"YOU CAN'T CHANGE THAT NUMBER"<<endl;
+    cout<<endl;
+    display(sudoku);
+  }
+  else{
+  cout<<"Please insert the number: ";
+  int num;
+  cin>>num;
+  int v=0;
+  int c=0;
+    for(int co=0; co<9; co++){ //Checks if the number exists inside the same row
+      v=v+1;
+      if(num==sudoku[row][co]){
+        cout<<"That # is already in use in the row!"<<endl;
+        v=v-1;
       }
     }
-  } else {
-    cout << "Something is wrong with the input file" << endl;
-  }
-}
-
-/*
- * The function prints the board.
- * Each cell is a zero (for empty) or the value 1 to 9
- * Each cell is separated by a space
- * NO SPACE at end of row.
- */
-void printBoard(vector< vector<int> >& board){
-  // nothing for now, you will implement this for Partial 2 project delivery
-  for(int r = 0; r < BOARDSIZE ; r++){
-    for(int c = 0; c < BOARDSIZE ; c++){
-      if(c > 0){
-	cout << " ";
+    for(int ro=0; ro<9 ; ro++){ // Check if the number exists inside the same column
+      c=c+1;
+      if(num==sudoku[ro][col]){
+        cout<<"That # is already in use in the column!"<<endl;
+        c=c-1;
       }
-      cout << board[r][c];
     }
-    cout << endl;
+  if((v==9)&&(c==9)){ // If it doesnt exists in the row or column, then the player can use the number 
+  sudoku[row][col]=num;
   }
+  display(sudoku);
+  }
+  cout<<"Do you wish to edit another number? (0-yes/1-no):";
+  cin>>ans;
 }
-/*
- * Your main program goes here.
- * first get the parameters, check if parameter size is 2
- * first parameter is always the program name in C/C++
- * second parameter is the filename to read in this program
- * any other number of parameters is illegal
- */
-int main(int argc, char* argv[]) {
-  string filename;
-
-  vector< vector<int> > theBoard(BOARDSIZE,vector<int>(BOARDSIZE));
-
-  switch(argc)
-    {
+}
+// void square1(int sudoku[][9], int row, int col, int num){
+//  int k1=0;
+//  int j1=0;
+//  for(int co=0; co<3;co++){
+//    k1=k1+1;
+//    if(num==sudoku[row][co]){
+//      cout<<"That # is already in use in the row!"<<endl;
+//      k1=k1-1;
+//    }
+//  }
+//  for(int ro=0; ro<3 ; ro++){ // Check if the number exists inside the same column
+//    j1=j1+1;
+//    if(num==sudoku[ro][col]){
+//      cout<<"That # is already in use in the column!"<<endl;
+      //j1=j1-1;
+    //}
+  //}
+  ////  
+//    }
+//  }
+//}
+void option(int sudoku[][9], int sudoku2[][9]){
+  int ans;
+  while(ans==0){
+  cout<<endl;
+  cout<<"Please choose an option you wish do perform:"<<endl;
+  cout<<"1-Edit a cell, 2-Erase a cell, 3-Display Board, 4-Quit program: ";
+  int opt;
+  cin>>opt;
+  switch(opt){
     case 1:
-      cout << "Please provide the parameters to the program, you must enter a filename to initiate the Sudoku." << endl;
-      exit(1);
+      edit(sudoku,sudoku2);
+    break;
     case 2:
-      filename = argv[1];
-      break;
+      erase(sudoku,sudoku2);
+    break;
+    case 3:
+      display(sudoku);
+    break;
+    case 4:
+      cout<<"Thank you for playing!";
+      ans=1;
+    break;
     default:
-      cout << "Please provide the parameters to the program, you must enter a filename to initiate the Sudoku." << endl;
-      exit(1);
-    }
+      cout<<"That was not a valid option";
+      cout<<endl;
+      break;
+  }
+}
+}
+int main(){
+  int sudoku[9][9]= {{5,3,0,0,7,0,0,0,0},{6,0,0,1,9,5,0,0,0},{0,9,8,0,0,0,0,6,0},{8,0,0,0,6,0,0,0,3},{4,0,0,8,0,3,0,0,1},{7,0,0,0,2,0,0,0,6},{0,6,0,0,0,0,2,8,0},{0,0,0,4,1,9,0,0,5},{0,0,0,0,8,0,0,7,9}};
+  int sudoku2[9][9]= {{5,3,0,0,7,0,0,0,0},{6,0,0,1,9,5,0,0,0},{0,9,8,0,0,0,0,6,0},{8,0,0,0,6,0,0,0,3},{4,0,0,8,0,3,0,0,1},{7,0,0,0,2,0,0,0,6},{0,6,0,0,0,0,2,8,0},{0,0,0,4,1,9,0,0,5},{0,0,0,0,8,0,0,7,9}};
 
-  createZeroBoard(theBoard);
-  populateBoardFromFile(theBoard,filename);
-
-  cout << "Welcome to the Game of Sudoku" << endl;
-  // Here you provide a menu to the user to do what they want
-  // The options are:
-  //    print (call the printBoard function)
-  //    write (ask user what number they want to add and where), must accept only legal values
-  //    erase (ask user which position they want to erase), must not erase original values
-  //    quit (quit the program)
-  string userChoice = "";
-  do{
-    cout << "What would you like to do (print, write, erase, quit): ";
-    cin >> userChoice;
-    if(userChoice == "print"){
-      printBoard(theBoard);
-      continue;
-    }
-    if(userChoice == "write"){
-      // ask user for position (row,column) and number
-      // check if valid (legal) and modify the board or notify that the move is invalid
-      continue;
-    }
-    if(userChoice == "erase"){
-      // ask user for position (row,column) to erase
-      // check if valid (legal) and modify the board or notify that the move is invalid
-      continue;
-    }
-    if(userChoice == "quit"){
-      cout << "Thanks for playing our game, have a great day!" << endl;
-      continue;
-    }
-    cout << "That was not a valid choice, try again." << endl;
-  } while (userChoice != "quit");
+  display(sudoku);
+  option(sudoku,sudoku2);
 
   return 0;
 }
