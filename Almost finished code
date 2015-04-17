@@ -1,0 +1,402 @@
+#include <iostream>
+#include <cmath>
+#include <fstream>
+#include <Windows.h>
+using namespace std;
+
+void display(int sudoku[][9]){
+  cout<<endl;
+  cout<<"  0 1 2  3 4 5  6 7 8  "<<endl;
+  for(int row = 0 ; row<9 ; row++){
+    if((row==3)||(row==6)){
+      cout<<"-------+------+------"<<endl;
+    }
+    cout<<row;
+    for(int column= 0 ; column < 9 ; column++){
+      if((column==3)||(column==6)){
+      cout<<"|";
+    }
+    cout<<" "<<sudoku[row][column];
+  }
+    cout<<endl;
+  }
+}
+
+void erase(int sudoku[][9], int sudoku2[][9]){
+  int ans;
+  int row;
+  int col;
+  while(ans==0){
+  cout<<endl;
+  cout<<"Please choose the row of the desired number to erase: (0-8)";
+  cin>>row;
+  if((row>8)||(row<0)){
+    cout<<"ERROR: Please input a proper row to choose from. Starting over."<<endl;
+    cout<<endl;
+    display(sudoku);
+    cout<<endl;
+    ans=0;
+  }
+  else{
+  cout<<"Please choose the column of the desired number to erase: ";
+  cin>>col;
+  if((col>8)||(col<0)){
+    cout<<"ERROR: Please input a proper column to choose from. Starting over."<<endl;
+    cout<<endl;
+    display(sudoku);
+    cout<<endl;
+    ans=0;
+  }
+  else{
+  if(sudoku2[row][col]!=0){
+    cout<<"YOU CAN'T ERASE THAT NUMBER"<<endl;
+    cout<<endl;
+  }
+  else{
+  sudoku[row][col]=0;
+  }
+  display(sudoku);
+  cout<<endl;
+  cout<<"Do you wish to erase another number? (0-yes/1-no):";
+  cin>>ans;
+}
+}
+}
+}
+void square1(int sudoku[][9], int row, int col, int num,int v, int c){
+  int k1=0;
+  int j1=0;
+  for(int co=0; co<3;co++){
+    k1=k1+1;
+    for(int rows=0; rows<3;rows++){
+      j1=j1+1;
+    if(num==sudoku[rows][co]){
+      cout<<"That # is already in use in the first square!"<<endl;
+      cout<<"Row: "<<rows<<" col: "<<co<<endl;
+      j1=j1-1;
+    }
+  }
+  }
+  if((v==9)&&(c==9)&&(j1==9)&&(k1==3)){ // If it doesnt exists in the row or column, then the player can use the number
+  sudoku[row][col]=num;
+  cout<<endl;
+}
+display(sudoku);
+cout<<endl;
+}
+void square2(int sudoku[][9], int row, int col, int num,int v, int c){
+  int k2=0;
+  int j2=0;
+  for(int co=3; co<6;co++){
+    k2=k2+1;
+    for(int rows=0; rows<3;rows++){
+      j2=j2+1;
+    if(num==sudoku[rows][co]){
+      cout<<"That # is already in use in the second square!"<<endl;
+      cout<<"Row: "<<rows<<" col: "<<co<<endl;
+      j2=j2-1;
+    }
+  }
+  }
+  if((v==9)&&(c==9)&&(j2==9)&&(k2==3)){ // If it doesnt exists in the row or column, then the player can use the number
+  sudoku[row][col]=num;
+  cout<<endl;
+}
+
+display(sudoku);
+cout<<endl;
+}
+void square3(int sudoku[][9], int row, int col, int num,int v, int c){
+  int k3=0;
+  int j3=0;
+  for(int co=6; co<9;co++){
+    k3=k3+1;
+    for(int rows=0; rows<3;rows++){
+      j3=j3+1;
+    if(num==sudoku[rows][co]){
+      cout<<"That # is already in use in the third square!"<<endl;
+      cout<<"Row: "<<rows<<" col: "<<co<<endl;
+      j3=j3-1;
+    }
+  }
+  }
+  if((v==9)&&(c==9)&&(j3==9)&&(k3==3)){ // If it doesnt exists in the row or column, then the player can use the number
+  sudoku[row][col]=num;
+  cout<<endl;
+}
+
+display(sudoku);
+cout<<endl;
+}
+void square4(int sudoku[][9], int row, int col, int num,int v, int c){
+  int k4=0;
+  int j4=0;
+  for(int co=0; co<3;co++){
+    k4=k4+1;
+    for(int rows=3; rows<6;rows++){
+      j4=j4+1;
+    if(num==sudoku[rows][co]){
+      cout<<"That # is already in use in the fourth square!"<<endl;
+      cout<<"Row: "<<rows<<" col: "<<co<<endl;
+    j4=j4-1;
+    }
+  }
+  }
+  if((v==9)&&(c==9)&&(j4==9)&&(k4==3)){ // If it doesnt exists in the row or column, then the player can use the number
+  sudoku[row][col]=num;
+  cout<<endl;
+}
+
+display(sudoku);
+cout<<endl;
+}
+void square5(int sudoku[][9], int row, int col, int num,int v, int c){
+  int k5=0;
+  int j5=0;
+  for(int co=3; co<6;co++){
+    k5=k5+1;
+    for(int rows=3; rows<6;rows++){
+      j5=j5+1;
+    if(num==sudoku[rows][co]){
+      cout<<"That # is already in use in the fifth square!"<<endl;
+      cout<<"Row: "<<rows<<" col: "<<co<<endl;
+      j5=j5-1;
+    }
+  }
+  }
+  if((v==9)&&(c==9)&&(j5==9)&&(k5==3)){ // If it doesnt exists in the row or column, then the player can use the number
+  sudoku[row][col]=num;
+  cout<<endl;
+}
+display(sudoku);
+cout<<endl;
+}
+void square6(int sudoku[][9], int row, int col, int num,int v, int c){
+  int k6=0;
+  int j6=0;
+  for(int co=6; co<9;co++){
+    k6=k6+1;
+    for(int rows=3; rows<6;rows++){
+      j6=j6+1;
+    if(num==sudoku[rows][co]){
+      cout<<"That # is already in use in the sixth square!"<<endl;
+      cout<<"Row: "<<rows<<" col: "<<co<<endl;
+      j6=j6-1;
+    }
+  }
+  }
+  if((v==9)&&(c==9)&&(j6==9)&&(k6==3)){ // If it doesnt exists in the row or column, then the player can use the number
+  sudoku[row][col]=num;
+  cout<<endl;
+}
+display(sudoku);
+cout<<endl;
+}
+void square7(int sudoku[][9], int row, int col, int num,int v, int c){
+  int k7=0;
+  int j7=0;
+  for(int co=0; co<3;co++){
+    k7=k7+1;
+    for(int rows=6; rows<9;rows++){
+      j7=j7+1;
+    if(num==sudoku[rows][co]){
+      cout<<"That # is already in use in the seventh square!"<<endl;
+      cout<<"Row: "<<rows<<" col: "<<co<<endl;
+      j7=j7-1;
+    }
+  }
+  }
+  if((v==9)&&(c==9)&&(j7==9)&&(k7==3)){ // If it doesnt exists in the row or column, then the player can use the number
+  sudoku[row][col]=num;
+  cout<<endl;
+}
+display(sudoku);
+cout<<endl;
+}
+void square8(int sudoku[][9], int row, int col, int num,int v, int c){
+  int k8=0;
+  int j8=0;
+  for(int co=3; co<6;co++){
+    k8=k8+1;
+    for(int rows=6; rows<9;rows++){
+      j8=j8+1;
+    if(num==sudoku[rows][co]){
+      cout<<"That # is already in use in the eighth square!"<<endl;
+      cout<<"Row: "<<rows<<" col: "<<co<<endl;
+      j8=j8-1;
+    }
+  }
+  }
+  if((v==9)&&(c==9)&&(j8==9)&&(k8==3)){ // If it doesnt exists in the row or column, then the player can use the number
+  sudoku[row][col]=num;
+  cout<<endl;
+}
+display(sudoku);
+cout<<endl;
+}
+void square9(int sudoku[][9], int row, int col, int num,int v, int c){
+  int k9=0;
+  int j9=0;
+  for(int co=6; co<9;co++){
+    k9=k9+1;
+    for(int rows=6; rows<9;rows++){
+      j9=j9+1;
+    if(num==sudoku[rows][co]){
+      cout<<"That # is already in use in the fifth square!"<<endl;
+      cout<<"Row: "<<rows<<" col: "<<co<<endl;
+      j9=j9-1;
+    }
+  }
+  }
+  if((v==9)&&(c==9)&&(j9==9)&&(k9==3)){ // If it doesnt exists in the row or column, then the player can use the number
+  sudoku[row][col]=num;
+  cout<<endl;
+}
+display(sudoku);
+cout<<endl;
+}
+
+
+void edit(int sudoku[][9], int sudoku2[][9]){
+  int ans;
+  int row;
+  int col;
+  while(ans==0){
+  cout<<endl;
+  cout<<"Please choose the ROW of the desired number to edit: (0-8)";
+  cin>>row;
+  if((row>8)||(row<0)){
+    cout<<"ERROR: Please input a proper row to choose from. Starting over."<<endl;
+    cout<<endl;
+    display(sudoku);
+    cout<<endl;
+    ans=0;
+  }
+  else{
+  cout<<"Please choose the COLUMN of the desired number to edit: (0-8)";
+  cin>>col;
+  if((col>8)||(col<0)){
+    cout<<"ERROR: Please input a proper column to choose from. Starting over."<<endl;
+    cout<<endl;
+    display(sudoku);
+    cout<<endl;
+    ans=0;
+  }
+  else{
+
+  if(sudoku2[row][col]!=0){
+    cout<<"YOU CAN'T CHANGE THAT NUMBER"<<endl;
+    cout<<endl;
+    display(sudoku);
+  }
+  else{
+  cout<<"Please insert the number: ";
+  int num;
+  cin>>num;
+  int v=0;
+  int c=0;
+    for(int co=0; co<9; co++){ //Checks if the number exists inside the same row
+      v=v+1;
+      if(num==sudoku[row][co]){
+        cout<<"That # is already in use in row: "<<row<<endl;
+
+        v=v-1;
+      }
+    }
+    for(int ro=0; ro<9 ; ro++){ // Check if the number exists inside the same column
+      c=c+1;
+      if(num==sudoku[ro][col]){
+        cout<<"That # is already in use in column: "<<col<<endl;
+        c=c-1;
+      }
+    }
+  if((row==0)||(row==1)||(row==2)){    //////// first 3 rows
+    if((col==0)||(col==1)||(col==2)){
+      square1(sudoku,row,col,num,v,c);
+    }
+    else{
+      if((col==3)||(col==4)||(col==5)){
+        square2(sudoku,row,col,num,v,c);
+      }
+      else{
+          square3(sudoku,row,col,num,v,c);
+      }
+    }
+  }
+  else{
+    if((row==3)||(row==4)||(row==5)){ ///////// next 3 rows
+      if((col==0)||(col==1)||(col==2)){
+        square4(sudoku,row,col,num,v,c);
+      }
+      else{
+        if((col==3)||(col==4)||(col==5)){
+          square5(sudoku,row,col,num,v,c);
+        }
+        else{
+            square6(sudoku,row,col,num,v,c);
+        }
+     }
+    }
+
+   else{
+     if((row==6)||(row==7)||(row==8)){
+       if((col==0)||(col==1)||(col==2)){
+         square7(sudoku,row,col,num,v,c);
+       }
+       else{
+         if((col==3)||(col==4)||(col==5)){
+           square8(sudoku,row,col,num,v,c);
+         }
+         else{
+             square9(sudoku,row,col,num,v,c);
+         }
+      }
+     }
+   }
+ }
+  cout<<endl;
+  cout<<"Do you wish to edit another number? (0-Yes/1-No):";
+  cin>>ans;
+}
+}
+}
+}
+}
+void option(int sudoku[][9], int sudoku2[][9]){
+  int ans;
+  while(ans==0){
+  cout<<endl;
+  cout<<"Please choose an option you wish do perform:"<<endl;
+  cout<<"1-Edit a cell, 2-Erase a cell, 3-Display Board, 4-Quit program: ";
+  int opt;
+  cin>>opt;
+  switch(opt){
+    case 1:
+      edit(sudoku,sudoku2);
+    break;
+    case 2:
+      erase(sudoku,sudoku2);
+    break;
+    case 3:
+      display(sudoku);
+    break;
+    case 4:
+      cout<<"Thank you for playing!";
+      ans=1;
+    break;
+    default:
+      cout<<"That was not a valid option";
+      cout<<endl;
+      break;
+  }
+}
+}
+int main(){
+  int sudoku[9][9]= {{5,3,0,0,7,0,0,0,0},{6,0,0,1,9,5,0,0,0},{0,9,8,0,0,0,0,6,0},{8,0,0,0,6,0,0,0,3},{4,0,0,8,0,3,0,0,1},{7,0,0,0,2,0,0,0,6},{0,6,0,0,0,0,2,8,0},{0,0,0,4,1,9,0,0,5},{0,0,0,0,8,0,0,7,9}};
+  int sudoku2[9][9]= {{5,3,0,0,7,0,0,0,0},{6,0,0,1,9,5,0,0,0},{0,9,8,0,0,0,0,6,0},{8,0,0,0,6,0,0,0,3},{4,0,0,8,0,3,0,0,1},{7,0,0,0,2,0,0,0,6},{0,6,0,0,0,0,2,8,0},{0,0,0,4,1,9,0,0,5},{0,0,0,0,8,0,0,7,9}};
+
+  display(sudoku);
+  option(sudoku,sudoku2);
+
+  return 0;
+}
